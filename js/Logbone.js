@@ -1,6 +1,21 @@
 (function () {
+	//declare vars
+	var config;
+	var isLogging;
+	var Logbone;
+	
+	//create the Logbone object on the global namespace
+	if (window.Logbone == undefined) {
+		window.Logbone = {};
+		Logbone = window.Logbone;
+	};
+	
+	Logbone.internalName = "Logbone";
+	Logbone.internalPrefix = "SYSOUT";
+	Logbone.internalFormat = "[%s][%s]: %s";
+	
 	//constants
-	var constant = {
+	Logbone.constant = {
 		defaultLogLevel: 'TRACE',
 		defaultLogValue: 5,
 		trace: 'TRACE',
@@ -11,67 +26,59 @@
 		silent: 'SILENT'
 	};
 	
-	//declare vars
-	var Logbone;
-	var config;
-	var isLogging;
-	var globalLogLevel;
-	var internalName = "Logbone";
-	var internalPrefix = "SYSOUT";
-	var internalFormat = "[%s][%s]: %s";
-	
 	//errors
-	var error = {
-		invalidLevel: internalName + ": invalid logger command!",
+	Logbone.error = {
+		invalidLevel: Logbone.internalName + ": invalid logger command!",
 		levelDoesNotExist: 'Invalid log level!'
 	};
-	
-	//create the Logbone object on the global namespace
-	if (window.Logbone == undefined) {
-		window.Logbone = {};
-		Logbone = window.Logbone;
-	}
 	
 	//initialize preconfigs..	
 	if (window.logboneConfig !== undefined) {
 		config = window.logboneConfig;
 		isLogging = config.sysout === true;
 
-		globalLogLevel =
+		Logbone.globalLogLevel =
 		config.logLevel !== undefined ?
-			config.logLevel : constant.defaultLogLevel;
+			config.logLevel : Logbone.constant.defaultLogLevel;
+	}else{
+		//if no preconfigs are defined, load defaults
+		Logbone.globalLogLevel = Logbone.constant.trace;
 	}
 	
 	//create the internal logger: sysout
 	this.sysout = function (msg) {
 		if (isLogging) {
-			console.log(internalFormat, internalPrefix, internalName, msg);
+			console.log(Logbone.internalFormat, Logbone.internalPrefix, Logbone.internalName, msg);
 		}
 	}
 	
 	//log the config and start-up
 	this.sysout('Logbone created.');
-	this.sysout('Log level initialized to: ' + globalLogLevel);
+	this.sysout('Log level initialized to: ' + Logbone.globalLogLevel);
 	
-	this.setLevel = function(level){
+	Logbone.setLevel = function(level){
 		//trim leading/folllwing spaces, to uppercase
 		level = level.trim().toUpperCase();
 		
 		if(level == undefined || !this.levelExists(level)){
-			throw error.levelDoesNotExist;
+			throw Logbone.error.levelDoesNotExist;
 		}
 		
 		this.globalLogLevel = level;
 	};
 	
-	this.levelExists = function(level){
+	Logbone.getLevel = function(){
+		return this.globalLogLevel;
+	};
+	
+	Logbone.levelExists = function(level){
 		switch(level){
-			case constant.trace:
-			case constant.debug:
-			case constant.info:
-			case constant.warn:
-			case constant.error:
-			case constant.silent:
+			case Logbone.constant.trace:
+			case Logbone.constant.debug:
+			case Logbone.constant.info:
+			case Logbone.constant.warn:
+			case Logbone.constant.error:
+			case Logbone.constant.silent:
 				return true;
 			default: 
 				return false;
@@ -88,29 +95,40 @@
 		this.getLevel = function () {
 			return this.level;
 		}
+		
+		this.setLevel = function(level){
+			//trim leading/folllwing spaces, to uppercase
+			level = level.trim().toUpperCase();
+			
+			if(level == undefined || !Logbone.levelExists(level)){
+				throw Logbone.error.levelDoesNotExist;
+			}
+			
+			this.level = level;
+		};
 
 		this.getLevelValue = function () {
 			switch (this.level) {
-				case constant.trace:
+				case Logbone.constant.trace:
 					return 5;
 
-				case constant.debug:
+				case Logbone.constant.debug:
 					return 4;
 
-				case constant.info:
+				case Logbone.constant.info:
 					return 3;
 
-				case constant.warn:
+				case Logbone.constant.warn:
 					return 2;
 
-				case constant.error:
+				case Logbone.constant.error:
 					return 1;
 
-				case constant.silent:
+				case Logbone.constant.silent:
 					return 0;
 
 				default:
-					return constant.defaultLogValue;
+					return Logbone.constant.defaultLogValue;
 			}
 		};
 
@@ -200,15 +218,15 @@
 		};
 
 		/*--build logger methods from commandClosure--*/
-		this.trace = commandClosure(this, 5, constant.trace);
-		this.debug = commandClosure(this, 4, constant.debug);
-		this.info = commandClosure(this, 3, constant.info);
-		this.warn = commandClosure(this, 2, constant.warn);
-		this.error = commandClosure(this, 1, constant.error);
+		this.trace = commandClosure(this, 5, Logbone.constant.trace);
+		this.debug = commandClosure(this, 4, Logbone.constant.debug);
+		this.info = commandClosure(this, 3, Logbone.constant.info);
+		this.warn = commandClosure(this, 2, Logbone.constant.warn);
+		this.error = commandClosure(this, 1, Logbone.constant.error);
 	};
 
 	Logbone.getLogger = function (name, prefix, level) {
-		var loggerLevel = level !== undefined ? level : globalLogLevel;
+		var loggerLevel = level !== undefined ? level : Logbone.globalLogLevel;
 		return new Logger(name, prefix, loggerLevel);
 	}
 	
