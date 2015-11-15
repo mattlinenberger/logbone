@@ -1,0 +1,33 @@
+{
+  "name": "logbone",
+  "version": "1.0.0",
+  "description": "A simple utility that lets you control your app\\'s logging with absolute ease.",
+  "main": "gulpfile.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scott-linenberger/logbone.git"
+  },
+  "keywords": [
+    "logging",
+    "log",
+    "logger",
+    "logbone"
+  ],
+  "author": "scott.linenberger@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/scott-linenberger/logbone/issues"
+  },
+  "homepage": "https://github.com/scott-linenberger/logbone#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-minify": "0.0.5"
+  }
+}
