@@ -1,0 +1,29 @@
+{
+  "name": "logbone",
+  "homepage": "https://github.com/scott-linenberger/logbone",
+  "authors": [
+    "Scott Linenberger <scott.linenberger@gmail.com>"
+  ],
+  "description": "A simple utility that lets you control your app's logging with absolute ease.",
+  "main": "dist/logbone.js",
+  "moduleType": [],
+  "keywords": [
+    "logbone",
+    "logging",
+    "utility",
+    "log",
+    "logs",
+    "console",
+    "logger"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "gulpfile.js",
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
