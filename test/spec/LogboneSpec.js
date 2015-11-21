@@ -7,7 +7,7 @@ describe('Logbone', function(){
 	
 	it('Should be initialied with a default level if no config exists', function () {
 		expect(window.logboneConfig).not.toBeDefined();
-		expect(Logbone.getLevel()).toEqual(Logbone.constant.defaultLogLevel);
+		expect(Logbone.getLevel()).toEqual(Logbone.defaults.level);
 	});
 
 	it('Should return a Logger when calling getLoggger with a name', function (){
@@ -33,15 +33,36 @@ describe('Logbone', function(){
 	});
 	
 	it('Should be able to change the log level', function () {
-		expect(Logbone.getLevel()).toEqual(Logbone.constant.trace);
+		expect(Logbone.getLevel()).toEqual(Logbone.level.trace);
 		Logbone.setLevel('DEBUG');
-		expect(Logbone.constant.debug).toEqual(Logbone.getLevel());
+		expect(Logbone.level.debug).toEqual(Logbone.getLevel());
+	});
+	
+	describe('Should update value and level when setLevel is called', function () {
+		
+		function setLevelTest(level){
+			it('Should set the level to:[' + level + '], when setLevel(' + level + ') is called', function (){
+				Logbone.setLevel(level);
+				expect(Logbone.getLevel()).toEqual(level);
+			});
+		}
+		
+		setLevelTest(Logbone.level.trace);
+		setLevelTest(Logbone.level.debug);
+		setLevelTest(Logbone.level.info);
+		setLevelTest(Logbone.level.warn);
+		setLevelTest(Logbone.level.error);
+		setLevelTest(Logbone.level.silent);
+		
+		/*--reset the level after testing--*/
+		Logbone.setLevel(Logbone.level.trace);
 	});
 	
 });
 
 var methodTest = function(method){
 	var logger = Logbone.getLogger('Logger', 'TEST');
+	var methodValue = Logbone.value[method];
 	
 	describe('Logger.' + method, function () {
 		var name = "Logger";
@@ -58,6 +79,11 @@ var methodTest = function(method){
 		
 		it('Should be defined', function () {
 			expect(logger[method]).toBeDefined();
+		});
+		
+		it('Should log to console.', function () {
+			logger[method]('Mic check, 1, 2.');
+			expect(logger[printFn]).toHaveBeenCalled();
 		});
 		
 		it('Should be able to log 1 param', function () {
@@ -246,6 +272,8 @@ var methodTest = function(method){
 		'nine',
 		10
 	];
+	
+	//practical test
 	logger[method](args[0]);
 	logger[method](args[0], args[1]);
 	logger[method](args[0], args[1], args[2]);
@@ -275,7 +303,7 @@ describe('Logger', function () {
 		expect(Logbone.getLevel()).toEqual(logger.getLevel());
 		
 		logger.setLevel('SILENT');
-		expect(Logbone.constant.silent).toEqual(logger.getLevel());
+		expect(Logbone.level.silent).toEqual(logger.getLevel());
 	});
 	
 	methodTest('trace');
@@ -284,3 +312,29 @@ describe('Logger', function () {
 	methodTest('warn');
 	methodTest('error');
 });
+
+// function levelTest(method, level){
+// 	var logger = Logbone.getLogger('LEVEL-CHECK', 'TEST');
+	
+// 	console.log('Setting level: ' + level);
+// 	Logbone.setLevel(level);
+	
+// 	beforeEach(function () {
+// 		spyOn(logger, 'printLn');
+// 	});
+	
+// 	it('Should be called', function () {
+// 		logger[method]('Testing 1, 2.. Testing 1, 2..')
+		
+// 		var currLevel = Logbone.getLevel().toLowerCase();
+// 		var currValue = Logbone.value[currLevel];
+// 		console.log('Current level is: %s, value is: %s', currLevel, currValue);
+		
+// 		expect(logger.printLn).toHaveBeenCalled();
+// 	});
+		
+// }
+
+// describe('When the log level is TRACE', function () {
+// 	levelTest('trace', Logbone.level.trace);
+// });
