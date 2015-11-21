@@ -14,17 +14,29 @@
 	Logbone.internalPrefix = "SYSOUT";
 	Logbone.internalFormat = "[%s][%s]: %s";
 	
-	//constants
-	Logbone.constant = {
-		defaultLogLevel: 'TRACE',
-		defaultLogValue: 5,
+	//defaults
+	Logbone.defaults = {
+		level: 'TRACE',
+		value: 5,
+	};
+	
+	Logbone.level = {
 		trace: 'TRACE',
 		debug: 'DEBUG',
 		info: 'INFO',
 		warn: 'WARN',
 		error: 'ERROR',
 		silent: 'SILENT'
-	};
+	}
+	
+	Logbone.value = {
+		trace: 5,
+		debug: 4,
+		info: 3,
+		warn: 2,
+		error: 1,
+		silent: 0
+	}
 	
 	//errors
 	Logbone.error = {
@@ -39,10 +51,10 @@
 
 		Logbone.globalLogLevel =
 		config.logLevel !== undefined ?
-			config.logLevel : Logbone.constant.defaultLogLevel;
+			config.logLevel : Logbone.defaults.level;
 	}else{
 		//if no preconfigs are defined, load defaults
-		Logbone.globalLogLevel = Logbone.constant.trace;
+		Logbone.globalLogLevel = Logbone.level.trace;
 	}
 	
 	//create the internal logger: sysout
@@ -73,12 +85,12 @@
 	
 	Logbone.levelExists = function(level){
 		switch(level){
-			case Logbone.constant.trace:
-			case Logbone.constant.debug:
-			case Logbone.constant.info:
-			case Logbone.constant.warn:
-			case Logbone.constant.error:
-			case Logbone.constant.silent:
+			case Logbone.level.trace:
+			case Logbone.level.debug:
+			case Logbone.level.info:
+			case Logbone.level.warn:
+			case Logbone.level.error:
+			case Logbone.level.silent:
 				return true;
 			default: 
 				return false;
@@ -101,7 +113,7 @@
 			level = level.trim().toUpperCase();
 			
 			if(level == undefined || !Logbone.levelExists(level)){
-				throw Logbone.error.levelDoesNotExist;
+				throw Logbone.error.levelDoesNotExist + "[" + level + "]";
 			}
 			
 			this.level = level;
@@ -109,26 +121,26 @@
 
 		this.getLevelValue = function () {
 			switch (this.level) {
-				case Logbone.constant.trace:
+				case Logbone.level.trace:
 					return 5;
 
-				case Logbone.constant.debug:
+				case Logbone.level.debug:
 					return 4;
 
-				case Logbone.constant.info:
+				case Logbone.level.info:
 					return 3;
 
-				case Logbone.constant.warn:
+				case Logbone.level.warn:
 					return 2;
 
-				case Logbone.constant.error:
+				case Logbone.level.error:
 					return 1;
 
-				case Logbone.constant.silent:
+				case Logbone.level.silent:
 					return 0;
 
 				default:
-					return Logbone.constant.defaultLogValue;
+					return Logbone.defaults.value;
 			}
 		};
 
@@ -218,11 +230,11 @@
 		};
 
 		/*--build logger methods from commandClosure--*/
-		this.trace = commandClosure(this, 5, Logbone.constant.trace);
-		this.debug = commandClosure(this, 4, Logbone.constant.debug);
-		this.info = commandClosure(this, 3, Logbone.constant.info);
-		this.warn = commandClosure(this, 2, Logbone.constant.warn);
-		this.error = commandClosure(this, 1, Logbone.constant.error);
+		this.trace = commandClosure(this, 5, Logbone.level.trace);
+		this.debug = commandClosure(this, 4, Logbone.level.debug);
+		this.info = commandClosure(this, 3, Logbone.level.info);
+		this.warn = commandClosure(this, 2, Logbone.level.warn);
+		this.error = commandClosure(this, 1, Logbone.level.error);
 	};
 
 	Logbone.getLogger = function (name, prefix, level) {
