@@ -97,21 +97,21 @@ describe('Logbone', function () {
 	});
 });
 
-describe('Logger', function () {
+describe('Logger instance', function () {
 	var name = 'LoggerTest';
 	var prefix = 'LoggerTestPrefix';
 	
 	var logger = Logbone.getLogger(name, prefix);
 	
-	it('Should be initialized with the correct name', function () {
+	it('Should be initialized with the correct name value when calling Logbone.getLogger(..) with a valid name argument.', function () {
 		expect(name).toEqual(logger.name);
 	});
 	
-	it('Should be initialized with the correct prefix when initialized with a prefix', function () {
+	it('Should be initialized with the correct prefix value calling  Logbone.getLogger(..) with a valid name and valid prefix argument.', function () {
 		expect(prefix).toEqual(logger.prefix);
 	});
 	
-	it('Should be initialized with the global log level if constructed without a log level param', function () {
+	it('Should be initialized with global log level if Logbone.getLogger(..) is called without a level argument.', function () {
 		expect(logger.getLevel()).toBeDefined();
 		expect(Logbone.getLevel()).toEqual(logger.getLevel());
 	});
@@ -136,7 +136,18 @@ describe('Logger', function () {
 		expect(logger.printArgs).toBeDefined();
 	});
 	
+	
 	describe('Calling setLevel(..) on the logger with a valid level', function () {
+		it('Should throw an error if called with an undefined log level argument.', function () {
+			var logger = Logbone.getLogger('setLevel');
+			
+			function callingWithUndefinedValue(){
+				logger.setLevel();
+			}
+			
+			expect(callingWithUndefinedValue).toThrow();
+		});
+		
 		it('Should set the Logger\'s level to the supplied valid value', function () {
 			var logger = Logbone.getLogger('LevelChange');
 			
@@ -148,6 +159,23 @@ describe('Logger', function () {
 			
 			expect(level).toEqual(logger.getLevel());
 		});
+		
+		it('Should cause the Logger to override the global log level rule using the supplied valid log level.', function () {
+			var logger = Logbone.getLogger('LevelChange');
+			
+			//set the global level to silent
+			Logbone.setLevel(Logbone.level.silent);
+			spyOn(logger, 'printLn');
+			
+			//set the logger's levelt to info
+			var level = Logbone.level.info;
+			logger.setLevel(level);
+			
+			logger.info('This should override the global level and printLn should be called!');
+			expect(level).toEqual(logger.getLevel());
+			expect(logger.printLn).toHaveBeenCalled();
+		});
+		
 	});
 });
 
