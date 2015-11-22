@@ -41,7 +41,8 @@
 	//errors
 	Logbone.error = {
 		invalidLevel: Logbone.internalName + ": invalid logger command!",
-		levelDoesNotExist: 'Invalid log level!'
+		levelDoesNotExist: 'Invalid log level!',
+		invalidLoggerName: 'Invalid Logger name argument! name undefined!'
 	};
 	
 	//initialize preconfigs..	
@@ -99,13 +100,23 @@
 
 	/*====Logger====*/
 	var Logger = function (name, prefix, level) {
+		if(name === undefined){
+			throw Logbone.error.invalidLoggerName;
+		}
+		
 		//construct
 		this.name = name;
 		this.prefix = prefix;
 		this.level = level;
 
 		this.getLevel = function () {
-			return this.level;
+			/*--if the logger has defined its own level--*/
+			if(this.level !== undefined){
+				return this.level;
+			}
+			
+			/*--otherwise, return the global level--*/
+			return Logbone.globalLogLevel;
 		}
 		
 		this.setLevel = function(level){
@@ -120,7 +131,7 @@
 		};
 
 		this.getLevelValue = function () {
-			switch (this.level) {
+			switch (this.getLevel()) {
 				case Logbone.level.trace:
 					return 5;
 
@@ -197,7 +208,7 @@
 
 		this.printLn = function (level, _args) {
 			if (level === undefined) {
-				throw error.invalidLevel;
+				throw Logbone.error.invalidLevel;
 			}
 
 			if (_args === undefined) {
@@ -238,8 +249,7 @@
 	};
 
 	Logbone.getLogger = function (name, prefix, level) {
-		var loggerLevel = level !== undefined ? level : Logbone.globalLogLevel;
-		return new Logger(name, prefix, loggerLevel);
+		return new Logger(name, prefix, level);
 	}
 	
 })();
