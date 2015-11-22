@@ -1,340 +1,226 @@
-describe('Logbone', function(){
-	
-	it('Should exist on the global namespace', function(){
+describe('Logbone', function () {
+
+	it('Should exist on the global namespace', function () {
 		expect(window.Logbone).toBeDefined();
 		expect(Logbone).toBeDefined();
 	});
-	
-	it('Should be initialied with a default level if no config exists', function () {
+
+	it('Should be initialied with a default level if no preload configuration exists', function () {
 		expect(window.logboneConfig).not.toBeDefined();
 		expect(Logbone.getLevel()).toEqual(Logbone.defaults.level);
 	});
 
-	it('Should return a Logger when calling getLoggger with a name', function (){
-		var namedLogger = Logbone.getLogger('NamedLogger');
-		expect(namedLogger).toBeDefined();
-	});
-	
-	it('Should return a Logger when calling getLogger with a name and prefix', function () {
-		 var namedPrefixedLogger = Logbone.getLogger('NamedPrefixeddLogger', 'TEST');
-		 expect(namedPrefixedLogger).toBeDefined();
-	});
-	
-	it('Should have a method for setting the log level', function () {
+	it('Should have the method: setLevel(..)', function () {
 		expect(Logbone.setLevel).toBeDefined();
 	});
-	
-	it('Should have a method for getting the log level', function () {
+
+	it('Should have the method: getLevel(..)', function () {
 		expect(Logbone.getLevel).toBeDefined();
 	});
-	
-	it('Should return a value for log level', function () {
-		expect(Logbone.getLevel()).toBeDefined();
+
+	describe('Logbone.getLevel()', function () {
+		it('Should return a value for log level', function () {
+			expect(Logbone.getLevel()).toBeDefined();
+		});
 	});
-	
-	it('Should be able to change the log level', function () {
-		expect(Logbone.getLevel()).toEqual(Logbone.level.trace);
-		Logbone.setLevel('DEBUG');
-		expect(Logbone.level.debug).toEqual(Logbone.getLevel());
-	});
-	
-	describe('Should update value and level when setLevel is called', function () {
+
+	describe('Logbone.setLevel(..)', function () {
+		it('Should change the log level when called with a valid level argument', function () {
+			//level should have been set to trace
+			Logbone.setLevel(Logbone.level.trace);
+			expect(Logbone.getLevel()).toEqual(Logbone.level.trace);
+			
+			//now level should be set to debug
+			Logbone.setLevel(Logbone.level.debug);
+			expect(Logbone.level.debug).toEqual(Logbone.getLevel());
+		});
 		
-		function setLevelTest(level){
-			it('Should set the level to:[' + level + '], when setLevel(' + level + ') is called', function (){
+		it('Should throw an error when called with an invalid level argument', function () {
+			function incorrectLevel(){
+				Logbone.setLevel('I_AM_NOT_A_VALID_LEVEL');
+			}
+			expect(incorrectLevel).toThrow();
+		});
+
+		function setLevelTest(level) {
+			it('Should set the level to:[' + level + '], when setLevel(' + level + ') is called', function () {
 				Logbone.setLevel(level);
 				expect(Logbone.getLevel()).toEqual(level);
 			});
 		}
-		
+
 		setLevelTest(Logbone.level.trace);
 		setLevelTest(Logbone.level.debug);
 		setLevelTest(Logbone.level.info);
 		setLevelTest(Logbone.level.warn);
 		setLevelTest(Logbone.level.error);
 		setLevelTest(Logbone.level.silent);
-		
-		/*--reset the level after testing--*/
-		Logbone.setLevel(Logbone.level.trace);
 	});
-	
-});
 
-var methodTest = function(method){
-	var logger = Logbone.getLogger('Logger', 'TEST');
-	var methodValue = Logbone.value[method];
-	
-	describe('Logger.' + method, function () {
-		var name = "Logger";
-		var prefix = "TEST";
-		var level = method.trim().toUpperCase();
-		
-		var printFn = 'printArgs';
-		
-		var format = '[' + level + '][' + prefix + '][' + name + ']:';
-		
-		beforeEach(function () {
-			spyOn(logger, printFn);
+	describe('getLogger():', function () {
+		it('Should return a Logger when calling getLoggger with the corect name', function () {
+			var name = 'NamedLogger';
+			var namedLogger = Logbone.getLogger(name);
+
+			expect(name).toEqual(namedLogger.name);
+		});
+
+		it('Should return a Logger when calling getLogger with the correct name and prefix', function () {
+			var name = 'NamedPrefixeddLogger';
+			var prefix = 'TEST';
+
+			var namedPrefixedLogger = Logbone.getLogger(name, prefix);
+
+			expect(name).toEqual(namedPrefixedLogger.name);
+			expect(prefix).toEqual(namedPrefixedLogger.prefix);
+		});
+
+		it('Should return a logger when calling getLogger with the correct name, prefix and level', function () {
+			var name = 'myName';
+			var prefix = 'PREFIX'
+			var level = Logbone.level.info;
+
+			var logger = Logbone.getLogger(name, prefix, level);
+
+			expect(name).toEqual(logger.name);
+			expect(prefix).toEqual(logger.prefix);
+			expect(level).toEqual(logger.getLevel());
 		});
 		
-		it('Should be defined', function () {
-			expect(logger[method]).toBeDefined();
-		});
-		
-		it('Should log to console.', function () {
-			logger[method]('Mic check, 1, 2.');
-			expect(logger[printFn]).toHaveBeenCalled();
-		});
-		
-		it('Should be able to log 1 param', function () {
-			var args = [
-				'Hello, World!'
-			];
+		it('Should throw an error when calling without a name argument', function () {
+			function callingWithoutName(){
+				Logbone.getLogger();
+			};
 			
-			logger[method](args[0]);
-			expect(logger[printFn]).toHaveBeenCalledWith(method, format, args);
+			expect(callingWithoutName).toThrow();
 		});
-		
-		
-		it('Should be able to log 2 params', function () {
-			var args = [
-				'Hello, World!',
-				1
-			];
-			
-			logger[method](args[0], args[1]);
-			expect(logger[printFn]).toHaveBeenCalledWith(method, format, args);
-		});
-		
-		it('Should be able to log 3 params', function () {
-			var args = [
-				'Hello, World!',
-				1,
-				{
-					item: {
-						value: "Logger"
-					}
-				}
-			];
-			
-			logger[method](args[0], args[1], args[2]);
-			expect(logger[printFn]).toHaveBeenCalledWith(method, format, args);
-		});
-		
-		it('Should be able to log 4 params', function () {
-			var args = [
-				'Hello, World!',
-				1,
-				{
-					item: {
-						value: "Logger"
-					}
-				},
-				"Item no. 4"
-			];
-			
-			logger[method](args[0], args[1], args[2], args[3]);
-			expect(logger[printFn]).toHaveBeenCalledWith(method, format, args);
-		});
-		
-		it('Should be able to log 5 params', function () {
-			var args = [
-				'Hello, World!',
-				1,
-				{
-					item: {
-						value: "Logger"
-					}
-				},
-				"Item no. 4",
-				"Item no. 5"
-			];
-			
-			logger[method](args[0], args[1], args[2], args[3], args[4]);
-			expect(logger[printFn]).toHaveBeenCalledWith(method, format, args);
-		});
-		
-		it('Should be able to log 6 params', function () {
-			var args = [
-				'Hello, World!',
-				1,
-				{
-					item: {
-						value: "Logger"
-					}
-				},
-				"Item no. 4",
-				"Item no. 5",
-				6
-			];
-			
-			logger[method](args[0], args[1], args[2], args[3], args[4], args[5]);
-			expect(logger[printFn]).toHaveBeenCalledWith(method, format, args);
-		});
-		
-		it('Should be able to log 7 params', function () {
-			var args = [
-				'Hello, World!',
-				1,
-				{
-					item: {
-						value: "Logger"
-					}
-				},
-				"Item no. 4",
-				"Item no. 5",
-				6,
-				{test: '123'}
-			];
-			
-			logger[method](args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
-			expect(logger[printFn]).toHaveBeenCalledWith(method, format, args);
-		});
-		
-		it('Should be able to log 8 params', function () {
-			var args = [
-				'Hello, World!',
-				1,
-				{
-					item: {
-						value: "Logger"
-					}
-				},
-				"Item no. 4",
-				"Item no. 5",
-				6,
-				{test: '123'},
-				'Eight'
-			];
-			
-			logger[method](args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7]);
-			expect(logger[printFn]).toHaveBeenCalledWith(method, format, args);
-		});
-		
-		it('Should be able to log 9 params', function () {
-			var args = [
-				'Hello, World!',
-				1,
-				{
-					item: {
-						value: "Logger"
-					}
-				},
-				"Item no. 4",
-				"Item no. 5",
-				6,
-				{test: '123'},
-				'Eight',
-				'nine'
-			];
-			
-			logger[method](args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
-			expect(logger[printFn]).toHaveBeenCalledWith(method, format, args);
-		});
-		
-		it('Should be able to log 10 params', function () {
-			var args = [
-				'Hello, World!',
-				1,
-				{
-					item: {
-						value: "Logger"
-					}
-				},
-				"Item no. 4",
-				"Item no. 5",
-				6,
-				{test: '123'},
-				'Eight',
-				'nine',
-				10
-			];
-			
-			logger[method](args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8] , args[9]);
-			expect(logger[printFn]).toHaveBeenCalledWith(method, format, args);
-		});		
 	});
-	
-	//practical tests that hit the real printFn
-		var args = [
-		'Hello, World!',
-		1,
-		{
-			item: {
-				value: "Logger"
-			}
-		},
-		"Item no. 4",
-		"Item no. 5",
-		6,
-		{test: '123'},
-		'Eight',
-		'nine',
-		10
-	];
-	
-	//practical test
-	logger[method](args[0]);
-	logger[method](args[0], args[1]);
-	logger[method](args[0], args[1], args[2]);
-	logger[method](args[0], args[1], args[2], args[3]);
-	logger[method](args[0], args[1], args[2], args[3], args[4]);
-	logger[method](args[0], args[1], args[2], args[3], args[4], args[5]);
-	logger[method](args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
-	logger[method](args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7]);
-	logger[method](args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
-	logger[method](args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8] , args[9]);
-	
-};
+});
 
 describe('Logger', function () {
+	var name = 'LoggerTest';
+	var prefix = 'LoggerTestPrefix';
 	
-	it('Should use the global log level if created without a log level param', function () {
-		var logger = Logbone.getLogger('LoggerTest');
-		
+	var logger = Logbone.getLogger(name, prefix);
+	
+	it('Should be initialized with the correct name', function () {
+		expect(name).toEqual(logger.name);
+	});
+	
+	it('Should be initialized with the correct prefix when initialized with a prefix', function () {
+		expect(prefix).toEqual(logger.prefix);
+	});
+	
+	it('Should be initialized with the global log level if constructed without a log level param', function () {
 		expect(logger.getLevel()).toBeDefined();
 		expect(Logbone.getLevel()).toEqual(logger.getLevel());
 	});
-	
-	it('Should be able change log level', function () {
-		var logger = Logbone.getLogger('LoggerTest');
-		
-		expect(logger.getLevel()).toBeDefined();
-		expect(Logbone.getLevel()).toEqual(logger.getLevel());
-		
-		logger.setLevel('SILENT');
-		expect(Logbone.level.silent).toEqual(logger.getLevel());
+
+	it('Should have the method: setLevel(..)', function () {
+		expect(logger.getLevel).toBeDefined();
+	});
+
+	it('Should have the method: getLevel(..)', function () {
+		expect(logger.getLevel).toBeDefined();
 	});
 	
-	methodTest('trace');
-	methodTest('debug');
-	methodTest('info');
-	methodTest('warn');
-	methodTest('error');
+	it('Should have the method: getLevelValue(..)', function () {
+		expect(logger.getLevelValue).toBeDefined();
+	});
+	
+	it('Should have the method: printLn(..)', function () {
+		expect(logger.printLn).toBeDefined();
+	});
+	
+	it('Should have the method: printArgs(..)', function () {
+		expect(logger.printArgs).toBeDefined();
+	});
+	
+	describe('Calling setLevel(..) on the logger with a valid level', function () {
+		it('Should set the Logger\'s level to the supplied valid value', function () {
+			var logger = Logbone.getLogger('LevelChange');
+			
+			//expect the logger to be init with the global level
+			expect(logger.getLevel()).toEqual(Logbone.getLevel());
+			
+			var level = Logbone.level.info;
+			logger.setLevel(level);
+			
+			expect(level).toEqual(logger.getLevel());
+		});
+	});
 });
 
-// function levelTest(method, level){
-// 	var logger = Logbone.getLogger('LEVEL-CHECK', 'TEST');
-	
-// 	console.log('Setting level: ' + level);
-// 	Logbone.setLevel(level);
-	
-// 	beforeEach(function () {
-// 		spyOn(logger, 'printLn');
-// 	});
-	
-// 	it('Should be called', function () {
-// 		logger[method]('Testing 1, 2.. Testing 1, 2..')
-		
-// 		var currLevel = Logbone.getLevel().toLowerCase();
-// 		var currValue = Logbone.value[currLevel];
-// 		console.log('Current level is: %s, value is: %s', currLevel, currValue);
-		
-// 		expect(logger.printLn).toHaveBeenCalled();
-// 	});
-		
-// }
+describe('When Logbone\'s global logging level is set to: ', function () {
 
-// describe('When the log level is TRACE', function () {
-// 	levelTest('trace', Logbone.level.trace);
-// });
+	function shouldLog(setLevel, level, shouldLog) {
+		var condition = shouldLog === false ? 'not' : '';
+
+		it(setLevel + ': ' + Logbone.level[level] + ' should ' + condition + ' print logs to console', function () {
+			var logger = Logbone.getLogger(level.toUpperCase() + '-TEST', 'TEST');
+			Logbone.setLevel(setLevel);
+
+			spyOn(logger, 'printLn');
+
+			logger[level](level + ' logging');
+
+			if (shouldLog === false) {
+				expect(logger.printLn).not.toHaveBeenCalled();
+			} else {
+				expect(logger.printLn).toHaveBeenCalled();
+			}
+		});
+	}
+
+	var testLevel = Logbone.level.silent;
+	shouldLog(testLevel, 'trace', false);
+	shouldLog(testLevel, 'debug', false);
+	shouldLog(testLevel, 'info', false);
+	shouldLog(testLevel, 'warn', false);
+	shouldLog(testLevel, 'error', false);
+
+	testLevel = Logbone.level.error;
+	shouldLog(testLevel, 'trace', false);
+	shouldLog(testLevel, 'debug', false);
+	shouldLog(testLevel, 'info', false);
+	shouldLog(testLevel, 'warn', false);
+	shouldLog(testLevel, 'error', true);
+
+	testLevel = Logbone.level.warn;
+	shouldLog(testLevel, 'trace', false);
+	shouldLog(testLevel, 'debug', false);
+	shouldLog(testLevel, 'info', false);
+	shouldLog(testLevel, 'warn', true);
+	shouldLog(testLevel, 'error', true);
+
+	testLevel = Logbone.level.info;
+	shouldLog(testLevel, 'trace', false);
+	shouldLog(testLevel, 'debug', false);
+	shouldLog(testLevel, 'info', true);
+	shouldLog(testLevel, 'warn', true);
+	shouldLog(testLevel, 'error', true);
+
+	testLevel = Logbone.level.debug;
+	shouldLog(testLevel, 'trace', false);
+	shouldLog(testLevel, 'debug', true);
+	shouldLog(testLevel, 'info', true);
+	shouldLog(testLevel, 'warn', true);
+	shouldLog(testLevel, 'error', true);
+
+	testLevel = Logbone.level.trace;
+	shouldLog(testLevel, 'trace', true);
+	shouldLog(testLevel, 'debug', true);
+	shouldLog(testLevel, 'info', true);
+	shouldLog(testLevel, 'warn', true);
+	shouldLog(testLevel, 'error', true);
+});
+
+describe('Trace logging', function () {
+	it('Should work', function () {
+		var logger = Logbone.getLogger('hi');
+		Logbone.setLevel(Logbone.level.trace);
+		spyOn(logger, 'printLn');
+		logger['trace']("hi")
+		expect(logger.printLn).toHaveBeenCalled();
+	});
+});
