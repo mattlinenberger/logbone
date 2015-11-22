@@ -41,6 +41,7 @@
 	//errors
 	Logbone.error = {
 		invalidLevel: Logbone.internalName + ": invalid logger command!",
+		levelUndefined: "Log level argument undefined.",
 		levelDoesNotExist: 'Invalid log level!',
 		invalidLoggerName: 'Invalid Logger name argument! name undefined!'
 	};
@@ -120,10 +121,14 @@
 		}
 		
 		this.setLevel = function(level){
+			if(level === undefined){
+				throw Logbone.error.levelUndefiend;
+			}
+			
 			//trim leading/folllwing spaces, to uppercase
 			level = level.trim().toUpperCase();
 			
-			if(level == undefined || !Logbone.levelExists(level)){
+			if(!Logbone.levelExists(level)){
 				throw Logbone.error.levelDoesNotExist + "[" + level + "]";
 			}
 			
