@@ -26,9 +26,9 @@ describe('Logbone', function () {
 
 	describe('Logbone.setLevel(..)', function () {
 		it('Should change the log level when called with a valid level argument', function () {
-			//level should have been set to trace
-			Logbone.setLevel(Logbone.level.trace);
-			expect(Logbone.getLevel()).toEqual(Logbone.level.trace);
+			//level should have been set to debug
+			Logbone.setLevel(Logbone.level.debug);
+			expect(Logbone.getLevel()).toEqual(Logbone.level.debug);
 			
 			//now level should be set to debug
 			Logbone.setLevel(Logbone.level.debug);
@@ -49,7 +49,6 @@ describe('Logbone', function () {
 			});
 		}
 
-		setLevelTest(Logbone.level.trace);
 		setLevelTest(Logbone.level.debug);
 		setLevelTest(Logbone.level.info);
 		setLevelTest(Logbone.level.warn);
@@ -57,7 +56,7 @@ describe('Logbone', function () {
 		setLevelTest(Logbone.level.silent);
 	});
 
-	describe('getLogger():', function () {
+	describe('getLogger()', function () {
 		it('Should return a Logger when calling getLoggger with the corect name', function () {
 			var name = 'NamedLogger';
 			var namedLogger = Logbone.getLogger(name);
@@ -201,54 +200,32 @@ describe('When Logbone\'s global logging level is set to: ', function () {
 	}
 
 	var testLevel = Logbone.level.silent;
-	shouldLog(testLevel, 'trace', false);
 	shouldLog(testLevel, 'debug', false);
 	shouldLog(testLevel, 'info', false);
 	shouldLog(testLevel, 'warn', false);
 	shouldLog(testLevel, 'error', false);
 
 	testLevel = Logbone.level.error;
-	shouldLog(testLevel, 'trace', false);
 	shouldLog(testLevel, 'debug', false);
 	shouldLog(testLevel, 'info', false);
 	shouldLog(testLevel, 'warn', false);
 	shouldLog(testLevel, 'error', true);
 
 	testLevel = Logbone.level.warn;
-	shouldLog(testLevel, 'trace', false);
 	shouldLog(testLevel, 'debug', false);
 	shouldLog(testLevel, 'info', false);
 	shouldLog(testLevel, 'warn', true);
 	shouldLog(testLevel, 'error', true);
 
 	testLevel = Logbone.level.info;
-	shouldLog(testLevel, 'trace', false);
 	shouldLog(testLevel, 'debug', false);
 	shouldLog(testLevel, 'info', true);
 	shouldLog(testLevel, 'warn', true);
 	shouldLog(testLevel, 'error', true);
 
 	testLevel = Logbone.level.debug;
-	shouldLog(testLevel, 'trace', false);
 	shouldLog(testLevel, 'debug', true);
 	shouldLog(testLevel, 'info', true);
 	shouldLog(testLevel, 'warn', true);
 	shouldLog(testLevel, 'error', true);
-
-	testLevel = Logbone.level.trace;
-	shouldLog(testLevel, 'trace', true);
-	shouldLog(testLevel, 'debug', true);
-	shouldLog(testLevel, 'info', true);
-	shouldLog(testLevel, 'warn', true);
-	shouldLog(testLevel, 'error', true);
-});
-
-describe('Trace logging', function () {
-	it('Should work', function () {
-		var logger = Logbone.getLogger('hi');
-		Logbone.setLevel(Logbone.level.trace);
-		spyOn(logger, 'printLn');
-		logger['trace']("hi")
-		expect(logger.printLn).toHaveBeenCalled();
-	});
 });
