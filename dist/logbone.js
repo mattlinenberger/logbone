@@ -14,14 +14,7 @@
 	Logbone.internalPrefix = "SYSOUT";
 	Logbone.internalFormat = "[%s][%s]: %s";
 	
-	//defaults
-	Logbone.defaults = {
-		level: 'TRACE',
-		value: 5,
-	};
-	
 	Logbone.level = {
-		trace: 'TRACE',
 		debug: 'DEBUG',
 		info: 'INFO',
 		warn: 'WARN',
@@ -30,7 +23,6 @@
 	}
 	
 	Logbone.value = {
-		trace: 5,
 		debug: 4,
 		info: 3,
 		warn: 2,
@@ -38,9 +30,18 @@
 		silent: 0
 	}
 	
+	//defaults
+	Logbone.defaults = {
+		level: Logbone.level.debug,
+		value: 5,
+	};
+	
+
+	
 	//errors
 	Logbone.error = {
 		invalidLevel: Logbone.internalName + ": invalid logger command!",
+		levelUndefined: "Log level argument undefined.",
 		levelDoesNotExist: 'Invalid log level!',
 		invalidLoggerName: 'Invalid Logger name argument! name undefined!'
 	};
@@ -55,7 +56,7 @@
 			config.logLevel : Logbone.defaults.level;
 	}else{
 		//if no preconfigs are defined, load defaults
-		Logbone.globalLogLevel = Logbone.level.trace;
+		Logbone.globalLogLevel = Logbone.level.debug;
 	}
 	
 	//create the internal logger: sysout
@@ -120,10 +121,14 @@
 		}
 		
 		this.setLevel = function(level){
+			if(level === undefined){
+				throw Logbone.error.levelUndefiend;
+			}
+			
 			//trim leading/folllwing spaces, to uppercase
 			level = level.trim().toUpperCase();
 			
-			if(level == undefined || !Logbone.levelExists(level)){
+			if(!Logbone.levelExists(level)){
 				throw Logbone.error.levelDoesNotExist + "[" + level + "]";
 			}
 			
@@ -227,9 +232,9 @@
 		}
 
 		/**-command closure for buiding the logging methods--*/
-		var commandClosure = function (_this, threshold, command) {
+		var commandClosure = function (_this, command) {
 			return function () {
-				if (_this.getLevelValue() >= threshold) {
+				if (_this.getLevelValue() >= Logbone.value[command]) {
 					var args = new Array(arguments.length);
 					for (var i = 0; i < arguments.length; i++) {
 						args[i] = arguments[i];
@@ -241,11 +246,10 @@
 		};
 
 		/*--build logger methods from commandClosure--*/
-		this.trace = commandClosure(this, 5, Logbone.level.trace);
-		this.debug = commandClosure(this, 4, Logbone.level.debug);
-		this.info = commandClosure(this, 3, Logbone.level.info);
-		this.warn = commandClosure(this, 2, Logbone.level.warn);
-		this.error = commandClosure(this, 1, Logbone.level.error);
+		this.debug = commandClosure(this, 'debug');
+		this.info = commandClosure(this, 'info');
+		this.warn = commandClosure(this, 'warn');
+		this.error = commandClosure(this, 'error');
 	};
 
 	Logbone.getLogger = function (name, prefix, level) {
