@@ -225,7 +225,7 @@
 				format = '[' + this.prefix + ']' + format;
 			}
 			
-			format = '[' + level + ']'+ format;
+			format = '[' + Logbone.level[level] + ']'+ format;
 
 			var command = level.toLowerCase();
 			this.printArgs(command, format, _args);
