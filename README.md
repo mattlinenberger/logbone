@@ -38,13 +38,14 @@ level of 'SILENT` will not output to the console.
 | ERROR  | YES    | YES   | YES  | YES   | YES    | NO     | 
 
 ## Logging methods  
-Logbone Loggers have four logging methods that utilize native console methods: 
-debug, info, warn and error. 
+Logbone Loggers have five logging methods that utilize native console methods: 
+log, debug, info, warn and error. 
 
 ```javascript
 //get a logger
 var logger = Logbone.getLogger('Level-check');
 
+logger.log('<--Log output');
 logger.debug('<--Debug output');
 logger.info('<--Info output');
 logger.warn('<--warn output');

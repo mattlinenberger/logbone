@@ -49,6 +49,7 @@ describe('Logbone', function () {
 			});
 		}
 
+		setLevelTest(Logbone.level.log);
 		setLevelTest(Logbone.level.debug);
 		setLevelTest(Logbone.level.info);
 		setLevelTest(Logbone.level.warn);
@@ -224,6 +225,13 @@ describe('When Logbone\'s global logging level is set to: ', function () {
 	shouldLog(testLevel, 'error', true);
 
 	testLevel = Logbone.level.debug;
+	shouldLog(testLevel, 'debug', true);
+	shouldLog(testLevel, 'info', true);
+	shouldLog(testLevel, 'warn', true);
+	shouldLog(testLevel, 'error', true);
+	
+	var testLevel = Logbone.level.log;
+	shouldLog(testLevel, 'log', true);
 	shouldLog(testLevel, 'debug', true);
 	shouldLog(testLevel, 'info', true);
 	shouldLog(testLevel, 'warn', true);
