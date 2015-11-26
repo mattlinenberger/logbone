@@ -15,6 +15,7 @@
 	Logbone.internalFormat = "[%s][%s]: %s";
 	
 	Logbone.level = {
+		log: 'LOG',
 		debug: 'DEBUG',
 		info: 'INFO',
 		warn: 'WARN',
@@ -23,6 +24,7 @@
 	}
 	
 	Logbone.value = {
+		log: 5,
 		debug: 4,
 		info: 3,
 		warn: 2,
@@ -35,8 +37,6 @@
 		level: Logbone.level.debug,
 		value: 5,
 	};
-	
-
 	
 	//errors
 	Logbone.error = {
@@ -87,7 +87,7 @@
 	
 	Logbone.levelExists = function(level){
 		switch(level){
-			case Logbone.level.trace:
+			case Logbone.level.log:
 			case Logbone.level.debug:
 			case Logbone.level.info:
 			case Logbone.level.warn:
@@ -137,7 +137,7 @@
 
 		this.getLevelValue = function () {
 			switch (this.getLevel()) {
-				case Logbone.level.trace:
+				case Logbone.level.log:
 					return 5;
 
 				case Logbone.level.debug:
@@ -246,6 +246,7 @@
 		};
 
 		/*--build logger methods from commandClosure--*/
+		this.log = commandClosure(this, 'log');
 		this.debug = commandClosure(this, 'debug');
 		this.info = commandClosure(this, 'info');
 		this.warn = commandClosure(this, 'warn');
