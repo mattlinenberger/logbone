@@ -79,7 +79,7 @@ able to use them.
 A constants object containing Strings representing Logbone's level constants.  
 It is recommended but not required to use this object when setting logging levels.
 
-`logger.setLevel(Logbone.level.info)` - (recommended)
+`logger.setLevel(Logbone.level.info)` - (recommended)  
 `logger.setLevel('INFO')` - also works  
 
 #### Logbone.value.[value] - [log, debug, info, warn, error, silent] - number 
@@ -102,7 +102,7 @@ Returns true if the supplied String argument is a valid logging level, else retu
 
 #### Logbone.getLogger(name, [prefix], [level]) - Logger
 **name** - name of the Logger (required)  
-**prefix** - prefix for the logger [optional] 
+**prefix** - prefix for the logger (optional)  
 **level** - the Logger's logging level. If none specified, global log level is used. 
 Returns a new Logger object
 
