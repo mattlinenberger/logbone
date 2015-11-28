@@ -34,8 +34,8 @@
 	
 	//defaults
 	Logbone.defaults = {
-		level: Logbone.level.debug,
-		value: 5,
+		level: Logbone.level.log,
+		value: Logbone.value.log,
 	};
 	
 	//errors
@@ -56,7 +56,7 @@
 			config.logLevel : Logbone.defaults.level;
 	}else{
 		//if no preconfigs are defined, load defaults
-		Logbone.globalLogLevel = Logbone.level.debug;
+		Logbone.globalLogLevel = Logbone.defaults.level;
 	}
 	
 	//create the internal logger: sysout
