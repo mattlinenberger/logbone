@@ -59,4 +59,79 @@ utilize the native console, so logging objects is no problem. Should you find
 a secnario where you need to log more than 10 items to the console at once, consider 
 using an object or breaking your logging up over multiple lines. 
 
-## Logging formatters  
+## Logging format specifiers    
+Logbone utilizes the browser's console format specifiers. Below are some format specifiers
+used by most of the latest major browsers. Support for format specifiers relies on your 
+browser. If your browser's console does not support format specifiers, you will not be 
+able to use them. 
+
+**Note: ** These format specifiers are very widely supported.  
+
+%s - Formats the value as a string  
+%i or %d - Formats the value as an integer.  
+%f - Formats the value as a floating point value.  
+%o - Formats the value as an expandable DOM element. As seen in the Elements panel.  
+%O - Formats the value as an expandable JavaScript object.  
+
+## API
+
+### Logbone.level.[level] - [log, debug, info, warn, error, silent] - String
+A constants object containing Strings representing Logbone's level constants.  
+It is recommended but not required to use this object when setting logging levels.
+
+`logger.setLevel(Logbone.level.info)` - (recommended)
+`logger.setLevel('INFO')` - also works  
+
+### Logbone.value.[value] - [log, debug, info, warn, error, silent] - number 
+A constants object containing numbers that represent Logbone levels. 
+
+### Logbone.defaults - Object
+An object containing Logbone's level and value defaults used during initialization. 
+
+### Logbone.error - Object
+An object containing error message constants.  
+
+### Logbone.setLevel(level) - void
+Sets Logbone's global logging level. 
+
+### Logbone.getLevel() - String
+Returns Logbone's global log level.  
+
+### Logbone.levelExists(String) - boolean
+Returns true if the supplied String argument is a valid logging level, else returns false.  
+
+### Logbone.getLogger(name, [prefix], [level]) - Logger
+**name** - name of the Logger (required)  
+**prefix** - prefix for the logger [optional] 
+**level** - the Logger's logging level. If none specified, global log level is used. 
+Returns a new Logger object
+
+### Logger.log(args) - up to 10 args
+Logging method. Only outputs to the console when the active log level is 'LOG'.
+Calls console.log with formatted arguments.
+
+### Logger.debug(args) - up to 10 args  
+Logging method. Only outputs to console when the active log level is 'DEBUG' or lower.
+Calls console.debug with formatted arguments.
+
+### Logger.info(args) - up to 10 args
+Logging method. Only outputs to console when the active log level is 'INFO' or lower. 
+Calls console.info with formatted arguments.
+
+### Logger.warn(args) - up to 10 args
+Logging method. Only outputs to console when the active log level is 'WARN' or lower. 
+Calls console.warn with formatted arguments.
+
+### Logger.error(args) - up to 10 args
+Logging method. Only outputs to console when the active log level is 'ERROR' or lower. 
+Calls console.error with formatted arguments.
+
+### Logger.getLevel() - String  
+Returns the active logging level for the Logger.  
+
+### Loggger.getLevelValue() - number  
+Returns the active logging value for the Logger.  
+
+### Logger.setLevel(level) - void  
+Sets the active logging level for the Logger. Setting a logging level on a Logger will 
+cause the Logger to use the new level argument instead of the global logging level. 
