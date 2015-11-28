@@ -75,63 +75,63 @@ able to use them.
 
 ## API
 
-### Logbone.level.[level] - [log, debug, info, warn, error, silent] - String
+#### Logbone.level.[level] - [log, debug, info, warn, error, silent] - String
 A constants object containing Strings representing Logbone's level constants.  
 It is recommended but not required to use this object when setting logging levels.
 
 `logger.setLevel(Logbone.level.info)` - (recommended)
 `logger.setLevel('INFO')` - also works  
 
-### Logbone.value.[value] - [log, debug, info, warn, error, silent] - number 
+#### Logbone.value.[value] - [log, debug, info, warn, error, silent] - number 
 A constants object containing numbers that represent Logbone levels. 
 
-### Logbone.defaults - Object
+#### Logbone.defaults - Object
 An object containing Logbone's level and value defaults used during initialization. 
 
-### Logbone.error - Object
+#### Logbone.error - Object
 An object containing error message constants.  
 
-### Logbone.setLevel(level) - void
+#### Logbone.setLevel(level) - void
 Sets Logbone's global logging level. 
 
-### Logbone.getLevel() - String
+#### Logbone.getLevel() - String
 Returns Logbone's global log level.  
 
-### Logbone.levelExists(String) - boolean
+#### Logbone.levelExists(String) - boolean
 Returns true if the supplied String argument is a valid logging level, else returns false.  
 
-### Logbone.getLogger(name, [prefix], [level]) - Logger
+#### Logbone.getLogger(name, [prefix], [level]) - Logger
 **name** - name of the Logger (required)  
 **prefix** - prefix for the logger [optional] 
 **level** - the Logger's logging level. If none specified, global log level is used. 
 Returns a new Logger object
 
-### Logger.log(args) - up to 10 args
+#### Logger.log(args) - up to 10 args
 Logging method. Only outputs to the console when the active log level is 'LOG'.
 Calls console.log with formatted arguments.
 
-### Logger.debug(args) - up to 10 args  
+#### Logger.debug(args) - up to 10 args  
 Logging method. Only outputs to console when the active log level is 'DEBUG' or lower.
 Calls console.debug with formatted arguments.
 
-### Logger.info(args) - up to 10 args
+#### Logger.info(args) - up to 10 args
 Logging method. Only outputs to console when the active log level is 'INFO' or lower. 
 Calls console.info with formatted arguments.
 
-### Logger.warn(args) - up to 10 args
+#### Logger.warn(args) - up to 10 args
 Logging method. Only outputs to console when the active log level is 'WARN' or lower. 
 Calls console.warn with formatted arguments.
 
-### Logger.error(args) - up to 10 args
+#### Logger.error(args) - up to 10 args
 Logging method. Only outputs to console when the active log level is 'ERROR' or lower. 
 Calls console.error with formatted arguments.
 
-### Logger.getLevel() - String  
+#### Logger.getLevel() - String  
 Returns the active logging level for the Logger.  
 
-### Loggger.getLevelValue() - number  
+#### Loggger.getLevelValue() - number  
 Returns the active logging value for the Logger.  
 
-### Logger.setLevel(level) - void  
+#### Logger.setLevel(level) - void  
 Sets the active logging level for the Logger. Setting a logging level on a Logger will 
 cause the Logger to use the new level argument instead of the global logging level. 
