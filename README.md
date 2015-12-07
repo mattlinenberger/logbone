@@ -129,7 +129,7 @@ Calls console.error with formatted arguments.
 #### Logger.getLevel() - String  
 Returns the active logging level for the Logger.  
 
-#### Loggger.getLevelValue() - number  
+#### Logger.getLevelValue() - number  
 Returns the active logging value for the Logger.  
 
 #### Logger.setLevel(level) - void  
