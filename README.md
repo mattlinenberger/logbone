@@ -1,3 +1,5 @@
+# [Checkout Logbone's Homepage](http://logbone.scottlinenberger.com/1.0.0/)
+
 # Logbone  
 Logbone is a dead simple utility written with javascript for javascript apps. Why Logbone? Simple! 
 Logbone makes console logging effortless. Quickly and easily create named loggers so you know exactly 
