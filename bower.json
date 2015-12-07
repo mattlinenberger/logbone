@@ -20,10 +20,13 @@
   "private": true,
   "ignore": [
     "gulpfile.js",
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
+    ".gitignore",
+    "logbone.html",
+    "logging_demo.js",
+    "package.json",
+    "node_modules/",
+    "bower_components/",
+    "test/",
+    "js/"
   ]
 }
