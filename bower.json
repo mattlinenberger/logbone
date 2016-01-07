@@ -4,7 +4,7 @@
   "authors": [
     "Scott Linenberger <scott.linenberger@gmail.com>"
   ],
-  "description": "A simple utility that lets you control your app's logging with absolute ease.",
+  "description": "Better Logging with Logbone.",
   "main": "dist/logbone.js",
   "moduleType": [],
   "keywords": [

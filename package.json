@@ -1,7 +1,7 @@
 {
   "name": "logbone",
   "version": "1.0.0",
-  "description": "A simple utility that lets you control your app\\'s logging with absolute ease.",
+  "description": "Better Logging with Logbone.",
   "main": "gulpfile.js",
   "directories": {
     "test": "test"
