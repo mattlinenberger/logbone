@@ -1,10 +1,10 @@
 {
   "name": "logbone",
+  "description": "Better Logging with Logbone.",
   "homepage": "https://github.com/scott-linenberger/logbone",
   "authors": [
     "Scott Linenberger <scott.linenberger@gmail.com>"
   ],
-  "description": "Better Logging with Logbone.",
   "main": "dist/logbone.js",
   "moduleType": [],
   "keywords": [
