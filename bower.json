@@ -5,8 +5,9 @@
   "authors": [
     "Scott Linenberger <scott.linenberger@gmail.com>"
   ],
-  "main": "dist/logbone.js",
-  "moduleType": [],
+  "main": [
+    "dist/logbone.js"
+  ],
   "keywords": [
     "logbone",
     "logging",
