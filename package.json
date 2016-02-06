@@ -23,6 +23,17 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "ignore": [
+    "gulpfile.js",
+    ".gitignore",
+    "logbone.html",
+    "logging_demo.js",
+    "package.json",
+    "node_modules/",
+    "bower_components/",
+    "test/",
+    "js/"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/scott-linenberger/logbone.git"
