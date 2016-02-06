@@ -7,15 +7,6 @@
   ],
   "main": "dist/logbone.js",
   "moduleType": [],
-  "keywords": [
-    "logbone",
-    "logging",
-    "utility",
-    "log",
-    "logs",
-    "console",
-    "logger"
-  ],
   "license": "MIT",
   "ignore": [
     "gulpfile.js",

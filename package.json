@@ -1,33 +1,35 @@
 {
   "name": "logbone",
+  "version": "1.0.2",
   "description": "Better Logging with Logbone.",
-  "version": "1.0.0",
-  "main": "gulpfile.js",
-  "directories": {
-    "test": "test"
+  "url": "http://logbone.scottlinenberger.com/1.0.0",
+  "keywords": [
+    "logbone",
+    "logging",
+    "utility",
+    "log",
+    "logs",
+    "console",
+    "logger"
+  ],
+  "author": "Scott Linenberger",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-minify": "0.0.5"
   },
+  "main": "logbone.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/scott-linenberger/logbone.git"
+    "url": "https://github.com/scott-linenberger/logbone.git"
   },
-  "keywords": [
-    "logging",
-    "log",
-    "logger",
-    "logbone"
-  ],
-  "author": "scott.linenberger@gmail.com",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/scott-linenberger/logbone/issues"
   },
-  "homepage": "https://github.com/scott-linenberger/logbone#readme",
-  "devDependencies": {
-    "gulp": "^3.9.0",
-    "gulp-concat": "^2.6.0",
-    "gulp-minify": "0.0.5"
-  }
+  "homepage": "http://logbone.scottlinenberger.com/1.0.0/"
 }
