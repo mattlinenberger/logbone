@@ -1,46 +1,46 @@
 {
-  "name": "logbone",
-  "version": "1.0.4",
-  "description": "Better Logging with Logbone.",
-  "url": "http://logbone.scottlinenberger.com/1.0.0",
-  "keywords": [
-    "logbone",
-    "logging",
-    "utility",
-    "log",
-    "logs",
-    "console",
-    "logger"
-  ],
-  "author": "Scott Linenberger",
-  "dependencies": {},
-  "devDependencies": {
-    "gulp": "^3.9.0",
-    "gulp-concat": "^2.6.0",
-    "gulp-minify": "0.0.5"
-  },
-  "main": "logbone.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "ignore": [
-    "gulpfile.js",
-    ".gitignore",
-    "logbone.html",
-    "logging_demo.js",
-    "package.json",
-    "node_modules/",
-    "bower_components/",
-    "test/",
-    "js/"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/scott-linenberger/logbone.git"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/scott-linenberger/logbone/issues"
-  },
-  "homepage": "http://logbone.scottlinenberger.com/1.0.0/"
+    "name": "logbone",
+    "description": "Better Logging with Logbone.",
+    "version": "1.0.4",
+    "homepage": "http://logbone.scottlinenberger.com/1.0.0/",
+    "keywords": [
+        "logbone",
+        "logging",
+        "utility",
+        "log",
+        "logs",
+        "console",
+        "logger"
+    ],
+    "bugs": {
+        "url": "https://github.com/scott-linenberger/logbone/issues"
+    },
+    "author": {
+        "name": "Scott Linenberger",
+        "email": "scott.linenberger@gmail.com",
+        "web": "http://scottlinenberger.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/scott-linenberger/logbone.git"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "gulp": "^3.9.0",
+        "gulp-concat": "^2.6.0",
+        "gulp-minify": "0.0.5"
+    },
+    "main": "logbone.js",
+    "ignore": [
+        "gulpfile.js",
+        ".gitignore",
+        "logbone.html",
+        "logging_demo.js",
+        "package.json",
+        "node_modules/",
+        "bower_components/",
+        "test/",
+        "js/"
+    ],
+    "license": "MIT"
 }

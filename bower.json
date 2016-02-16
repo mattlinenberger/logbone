@@ -1,32 +1,34 @@
 {
-  "name": "logbone",
-  "description": "Better Logging with Logbone.",
-  "homepage": "https://github.com/scott-linenberger/logbone",
-  "authors": [
-    "Scott Linenberger <scott.linenberger@gmail.com>"
-  ],
-  "main": [
-    "dist/logbone.js"
-  ],
-  "keywords": [
-    "logbone",
-    "logging",
-    "utility",
-    "log",
-    "logs",
-    "console",
-    "logger"
-  ],
-  "license": "MIT",
-  "ignore": [
-    "gulpfile.js",
-    ".gitignore",
-    "logbone.html",
-    "logging_demo.js",
-    "package.json",
-    "node_modules/",
-    "bower_components/",
-    "test/",
-    "js/"
-  ]
+    "name": "logbone",
+    "description": "Logbone is a dead-simple logging utility.",
+    "homepage": "https://github.com/scott-linenberger/logbone",
+    "dependencies": {},
+    "devDependencies": {},
+    "keywords": [
+        "logbone",
+        "logging",
+        "utility",
+        "log",
+        "logs",
+        "console",
+        "logger"
+    ],
+    "authors": [
+        "Scott Linenberger <scott.linenberger@gmail.com>"
+    ],
+    "main": [
+        "dist/logbone.js"
+    ],
+    "license": ["MIT"],
+    "ignore": [
+        "gulpfile.js",
+        ".gitignore",
+        "logbone.html",
+        "logging_demo.js",
+        "package.json",
+        "node_modules/",
+        "bower_components/",
+        "test/",
+        "js/"
+    ]
 }
