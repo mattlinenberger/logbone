@@ -32,12 +32,12 @@ Logbone's loggers are all about log levels (try saying that 3 times fast). The f
 and log methods used by Logbone. 'SILENT' is only a level, not a logging method. Loggers using a 
 level of 'SILENT` will not output to the console. 
 
-| Level  | TRACE  | DEBUG | INFO | WARN  | ERROR  | SILENT |    
-| -----: | :----: | :---: | :--: | :---: | :----: | ------ |  
-| DEBUG  | YES    | YES   | NO   | NO    | NO     | NO     |  
-| INFO   | YES    | YES   | YES  | NO    | NO     | NO     |  
-| WARN   | YES    | YES   | YES  | YES   | NO     | NO     |  
-| ERROR  | YES    | YES   | YES  | YES   | YES    | NO     | 
+| Level  | DEBUG | INFO | WARN  | ERROR  | SILENT |    
+| -----: | :---: | :--: | :---: | :----: | ------ |  
+| DEBUG  | YES   | NO   | NO    | NO     | NO     |  
+| INFO   | YES   | YES  | NO    | NO     | NO     |  
+| WARN   | YES   | YES  | YES   | NO     | NO     |  
+| ERROR  | YES   | YES  | YES   | YES    | NO     | 
 
 ## Logging methods  
 Logbone Loggers have five logging methods that utilize native console methods: 
