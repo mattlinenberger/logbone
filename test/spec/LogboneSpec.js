@@ -179,6 +179,24 @@ describe('Logger instance', function () {
 	});
 });
 
+describe('Chainable setLevel method', function () {
+	var logger = Logbone.getLogger('Chainable', 'setLevel');
+
+	it('should return the instance of the logger', function () {
+		expect(logger.setLevel(Logbone.level.debug)).toEqual(logger);
+	});
+
+});
+
+describe('Chainable logging method', function () {
+	var logger = Logbone.getLogger('ChainableLogger');
+
+	it('should return the instance of the logger', function(){
+		expect(logger.debug('debug called')).toEqual(logger);
+	});
+
+});
+
 describe('When Logbone\'s global logging level is set to: ', function () {
 
 	function shouldLog(setLevel, level, shouldLog) {
