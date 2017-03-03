@@ -4,10 +4,13 @@
 	var isLogging;
 	var Logbone;
 
+	var root = (typeof self == 'object' && self.self === self && self) ||
+            (typeof global == 'object' && global.global === global && global);
+
 	//create the Logbone object on the global namespace
-	if (window.Logbone === undefined) {
-		window.Logbone = {};
-		Logbone = window.Logbone;
+	if (root.Logbone === undefined) {
+		root.Logbone = {};
+		Logbone = root.Logbone;
 	}
 
 	Logbone.internalName = "Logbone";
@@ -47,8 +50,8 @@
 	};
 
 	//initialize preconfigs..	
-	if (window.logboneConfig !== undefined) {
-		config = window.logboneConfig;
+	if (root.logboneConfig !== undefined) {
+		config = root.logboneConfig;
 		isLogging = config.sysout === true;
 
 		Logbone.globalLogLevel =
