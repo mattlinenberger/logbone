@@ -32,7 +32,6 @@
     "gulp-minify": "0.0.5",
     "jshint": "^2.9.4"
   },
-  "main": "logbone.js",
   "ignore": [
     "gulpfile.js",
     ".gitignore",
