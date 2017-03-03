@@ -4,6 +4,8 @@
 	var isLogging;
 	var Logbone;
 
+	//root variable init code sourced from: 
+	//https://github.com/jashkenas/backbone/blob/master/backbone.js
 	var root = (typeof self == 'object' && self.self === self && self) ||
             (typeof global == 'object' && global.global === global && global);
 

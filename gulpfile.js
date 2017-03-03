@@ -3,6 +3,8 @@ var gulp = require('gulp');
 var concat = require('gulp-concat');
 var minify = require('gulp-minify');
 var lint = require('gulp-jshint');
+var jasmine = require('gulp-jasmine');
+var logbone = require('./js/Logbone.js');
 
 /*--package properties--*/
 var pkg = require('./package.json');
@@ -14,8 +16,18 @@ var filename = 'logbone.js';
 /*--main script--*/
 var logboneJs = 'js/Logbone.js';
 
+/*--tests--*/
+gulp.task('test', [], function(){
+	var stream = gulp.src([
+		'test/spec/LogboneSpec.js'
+	])
+	.pipe(jasmine());
+
+	return stream;
+});
+
 /*--lint--*/
-gulp.task('lint', [], function(){
+gulp.task('lint', ['test'], function(){
 	var stream = 
 		gulp.src(logboneJs)
 		.pipe(lint())
