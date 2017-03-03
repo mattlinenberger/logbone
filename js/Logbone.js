@@ -8,7 +8,7 @@
 	if (window.Logbone === undefined) {
 		window.Logbone = {};
 		Logbone = window.Logbone;
-	};
+	}
 
 	Logbone.internalName = "Logbone";
 	Logbone.internalPrefix = "SYSOUT";
@@ -21,7 +21,7 @@
 		warn: 'WARN',
 		error: 'ERROR',
 		silent: 'SILENT'
-	}
+	};
 
 	Logbone.value = {
 		log: 5,
@@ -30,7 +30,7 @@
 		warn: 2,
 		error: 1,
 		silent: 0
-	}
+	};
 
 	//defaults
 	Logbone.defaults = {
@@ -64,7 +64,7 @@
 		if (isLogging) {
 			console.log(Logbone.internalFormat, Logbone.internalPrefix, Logbone.internalName, msg);
 		}
-	}
+	};
 
 	//log the config and start-up
 	this.sysout('Logbone created.');
@@ -101,6 +101,7 @@
 
 	/*====Logger====*/
 	var Logger = function (name, prefix, level) {
+
 		if (name === undefined) {
 			throw Logbone.error.invalidLoggerName;
 		}
@@ -118,7 +119,7 @@
 
 			/*--otherwise, return the global level--*/
 			return Logbone.globalLogLevel;
-		}
+		};
 
 		this.setLevel = function (level) {
 			if (level === undefined){
@@ -133,6 +134,7 @@
 			}
 
 			this.level = level;
+			return this;
 		};
 
 		this.getLevelValue = function () {
@@ -209,7 +211,7 @@
 			if (_args.length === 10) {
 				console[command](format, _args[0], _args[1], _args[2], _args[3], _args[4], _args[5], _args[6], _args[7], _args[8], _args[9]);
 			}
-		}
+		};
 
 		this.printLn = function (level, _args) {
 			if (level === undefined) {
@@ -229,7 +231,9 @@
 
 			var command = level.toLowerCase();
 			this.printArgs(command, format, _args);
-		}
+			
+			return this;
+		};
 
 		/**-command closure for buiding the logging methods--*/
 		var commandClosure = function (_this, command) {
@@ -242,7 +246,9 @@
 
 					_this.printLn(command, args);
 				}
-			}
+				
+				return _this;
+			};
 		};
 
 		/*--build logger methods from commandClosure--*/
@@ -255,6 +261,6 @@
 
 	Logbone.getLogger = function (name, prefix, level) {
 		return new Logger(name, prefix, level);
-	}
+	};
 
 })();
