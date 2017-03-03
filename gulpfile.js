@@ -2,6 +2,7 @@
 var gulp = require('gulp');
 var concat = require('gulp-concat');
 var minify = require('gulp-minify');
+var lint = require('gulp-jshint');
 
 /*--package properties--*/
 var pkg = require('./package.json');
@@ -10,9 +11,21 @@ var pkg = require('./package.json');
 var dest = 'dist';
 var filename = 'logbone.js';
 
-gulp.task('build', [], function(){
+/*--main script--*/
+var logboneJs = 'js/Logbone.js';
+
+/*--lint--*/
+gulp.task('lint', [], function(){
+	var stream = 
+		gulp.src(logboneJs)
+		.pipe(lint())
+		.pipe(lint.reporter('default'));
+	;
+});
+
+gulp.task('build', ['lint'], function(){
 	var stream = gulp.src([
-			'js/Logbone.js'
+			logboneJs
 		])
 		.pipe(concat(filename))
 		.pipe(minify())
