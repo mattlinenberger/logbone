@@ -108,6 +108,12 @@ Returns true if the supplied String argument is a valid logging level, else retu
 **level** - the Logger's logging level. If none specified, global log level is used. 
 Returns a new Logger object
 
+#### Logger.getSubLogger(identifier) - Logger  
+**identifier** - name to be used for the sub-logger  
+Returns a new Logger instance using the logger's log level and name. The 
+sub-logger's prefix is the parent logger's name and the sub-logger's name is the 
+supplied identifier parameter.
+
 #### Logger.log(args) - up to 10 args
 Logging method. Only outputs to the console when the active log level is 'LOG'.
 Calls console.log with formatted arguments.
