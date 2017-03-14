@@ -173,48 +173,55 @@
 				_args.shift();
 			}
 
+			var commandFn = console[command];
+
+			//default to 'log' if the command type is unknown
+			if(commandFn === undefined){
+				commandFn = console.log;
+			}
+
 			if (_args.length === 0) {
-				console[command](format);
+				commandFn(format);
 			}
 
 			if (_args.length === 1) {
-				console[command](format, _args[0]);
+				commandFn(format, _args[0]);
 			}
 
 			if (_args.length === 2) {
-				console[command](format, _args[0], _args[1]);
+				commandFn(format, _args[0], _args[1]);
 			}
 
 			if (_args.length === 3) {
-				console[command](format, _args[0], _args[1], _args[2]);
+				commandFn(format, _args[0], _args[1], _args[2]);
 			}
 
 			if (_args.length === 4) {
-				console[command](format, _args[0], _args[1], _args[2], _args[3]);
+				commandFn(format, _args[0], _args[1], _args[2], _args[3]);
 			}
 
 			if (_args.length === 5) {
-				console[command](format, _args[0], _args[1], _args[2], _args[3], _args[4]);
+				commandFn(format, _args[0], _args[1], _args[2], _args[3], _args[4]);
 			}
 
 			if (_args.length === 6) {
-				console[command](format, _args[0], _args[1], _args[2], _args[3], _args[4], _args[5]);
+				commandFn(format, _args[0], _args[1], _args[2], _args[3], _args[4], _args[5]);
 			}
 
 			if (_args.length === 7) {
-				console[command](format, _args[0], _args[1], _args[2], _args[3], _args[4], _args[5], _args[6]);
+				commandFn(format, _args[0], _args[1], _args[2], _args[3], _args[4], _args[5], _args[6]);
 			}
 
 			if (_args.length === 8) {
-				console[command](format, _args[0], _args[1], _args[2], _args[3], _args[4], _args[5], _args[6], _args[7]);
+				commandFn(format, _args[0], _args[1], _args[2], _args[3], _args[4], _args[5], _args[6], _args[7]);
 			}
 
 			if (_args.length === 9) {
-				console[command](format, _args[0], _args[1], _args[2], _args[3], _args[4], _args[5], _args[6], _args[7], _args[8]);
+				commandFn(format, _args[0], _args[1], _args[2], _args[3], _args[4], _args[5], _args[6], _args[7], _args[8]);
 			}
 
 			if (_args.length === 10) {
-				console[command](format, _args[0], _args[1], _args[2], _args[3], _args[4], _args[5], _args[6], _args[7], _args[8], _args[9]);
+				commandFn(format, _args[0], _args[1], _args[2], _args[3], _args[4], _args[5], _args[6], _args[7], _args[8], _args[9]);
 			}
 		};
 
