@@ -35,7 +35,16 @@ gulp.task('lint', ['test'], function(){
 	;
 });
 
-gulp.task('build', ['lint'], function(){
+gulp.task('build', [], function(){
+	var stream = gulp.src([
+			logboneJs
+		])
+		.pipe(concat(filename))
+		.pipe(minify())
+		.pipe(gulp.dest('dist/'));		
+});
+
+gulp.task('build-and-test', ['lint'], function(){
 	var stream = gulp.src([
 			logboneJs
 		])
@@ -45,5 +54,5 @@ gulp.task('build', ['lint'], function(){
 });
 
 gulp.task('default', [
-	'build'
+	'build-and-test'
 ]);
