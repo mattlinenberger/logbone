@@ -21,13 +21,13 @@ describe('Logbone', function () {
 		expect(Logbone.getLevel).toBeDefined();
 	});
 
-	describe('Logbone.getLevel()', function () {
+	describe('.getLevel()', function () {
 		it('Should return a value for log level', function () {
 			expect(Logbone.getLevel()).toBeDefined();
 		});
 	});
 
-	describe('Logbone.setLevel(..)', function () {
+	describe('.setLevel(..)', function () {
 		it('Should change the log level when called with a valid level argument', function () {
 			//level should have been set to debug
 			Logbone.setLevel(Logbone.level.debug);
@@ -60,7 +60,7 @@ describe('Logbone', function () {
 		setLevelTest(Logbone.level.silent);
 	});
 
-	describe('getLogger()', function () {
+	describe('.getLogger(..)', function () {
 		it('Should return a Logger when calling getLoggger with the corect name', function () {
 			var name = 'NamedLogger';
 			var namedLogger = Logbone.getLogger(name);
@@ -98,7 +98,71 @@ describe('Logbone', function () {
 			expect(callingWithoutName).toThrow();
 		});
 	});
+
+	describe('.getSubLogger(..)', function () {
+
+		describe('Parent Logger without prefix', function () {
+			var logger;
+			var parentName = 'ParentLogger';
+			var identifier = 'SubLogger';
+			var subLogger;
+
+			it('Should return an object that is not undefined', function () {
+				expect(subLogger).toBeDefined();
+			});
+
+			it('Should have a name that matches the supplied identifier parameter', function () {
+				expect(subLogger.name).toEqual(identifier);
+			});
+
+			it('Should have a prefix that matches the parent logger\'s name', function () {
+				expect(subLogger.prefix).toEqual(parentName);
+			});
+
+			it('Should have a logging level that matches the parent Logger\'s logging level', function() {
+				expect(subLogger.getLevel()).toEqual(logger.getLevel());
+			});
+
+			beforeAll(function () {
+				logger = Logbone.getLogger(parentName);
+				logger.setLevel(Logbone.level.info);
+				subLogger = logger.getSubLogger(identifier);
+			});
+
+		});
+
+		describe('Parent Logger with prefix', function () {
+			var logger;
+			var parentName = 'ParentLogger';
+			var parentPrefix = 'ParentPrefix';
+			var identifier = 'SubLogger';
+			var subLogger;
+
+			it('Should return an object that is not undefined', function () {
+				expect(subLogger).toBeDefined();
+			});
+
+			it('Should have a name of ' + identifier, function () {
+				expect(subLogger.name).toEqual(identifier);
+			});
+
+			it('Should have a prefix of the parent logger prefix', function () {
+				expect(subLogger.prefix).toEqual(parentPrefix);
+			});
+
+			beforeAll(function () {
+				logger = Logbone.getLogger(parentName, parentPrefix);
+				subLogger = logger.getSubLogger(identifier);
+			});
+
+		});
+
+
+	});
+
 });
+
+
 
 describe('Logger instance', function () {
 	var name = 'LoggerTest';

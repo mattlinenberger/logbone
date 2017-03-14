@@ -7,7 +7,7 @@
 	//root variable init code sourced from: 
 	//https://github.com/jashkenas/backbone/blob/master/backbone.js
 	var root = (typeof self == 'object' && self.self === self && self) ||
-            (typeof global == 'object' && global.global === global && global);
+		(typeof global == 'object' && global.global === global && global);
 
 	//create the Logbone object on the global namespace
 	if (root.Logbone === undefined) {
@@ -118,7 +118,7 @@
 
 		this.getLevel = function () {
 			/*--if the logger has defined its own level--*/
-			if (this.level !== undefined){
+			if (this.level !== undefined) {
 				return this.level;
 			}
 
@@ -127,7 +127,7 @@
 		};
 
 		this.setLevel = function (level) {
-			if (level === undefined){
+			if (level === undefined) {
 				throw Logbone.error.levelUndefiend;
 			}
 
@@ -236,11 +236,29 @@
 
 			var command = level.toLowerCase();
 			this.printArgs(command, format, _args);
-			
+
 			return this;
 		};
 
-		/**-command closure for buiding the logging methods--*/
+		/*-- get sub-logger --*/
+		this.getSubLogger = function (identifier) {
+			var subLogger;
+
+			if (this.prefix === undefined) {
+				/* if no prefix was defined, use the logger's name as the prefix */
+				subLogger = Logbone.getLogger(identifier, this.name);
+			} else {
+				/* if a prefix was defined, use that prefix with the sub-logger */
+				subLogger = Logbone.getLogger(identifier, this.prefix);
+			}
+
+			/* set the sub-logger's level to that of the parent logger */
+			subLogger.setLevel(this.getLevel());
+
+			return subLogger;
+		};
+
+		/*-- command closure for buiding the logging methods --*/
 		var commandClosure = function (_this, command) {
 			return function () {
 				if (_this.getLevelValue() >= Logbone.value[command]) {
@@ -251,7 +269,7 @@
 
 					_this.printLn(command, args);
 				}
-				
+
 				return _this;
 			};
 		};
