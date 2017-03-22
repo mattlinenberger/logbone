@@ -65,15 +65,15 @@
 	}
 
 	//create the internal logger: sysout
-	this.sysout = function (msg) {
+	Logbone.sysout = function (msg) {
 		if (isLogging) {
 			console.log(Logbone.internalFormat, Logbone.internalPrefix, Logbone.internalName, msg);
 		}
 	};
 
 	//log the config and start-up
-	this.sysout('Logbone created.');
-	this.sysout('Log level initialized to: ' + Logbone.globalLogLevel);
+	Logbone.sysout('Logbone created.');
+	Logbone.sysout('Log level initialized to: ' + Logbone.globalLogLevel);
 
 	Logbone.setLevel = function (level) {
 		//trim leading/folllwing spaces, to uppercase
